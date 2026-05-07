@@ -6,7 +6,7 @@
 #
 
 FILE="/etc/mmdvmhost"
-rpi-rw
+mount -o remount,rw /
 
 if ! grep -q '^Options=UNIT=true$' "$FILE"; then
     sudo sed -i '159i Options=UNIT=true' "$FILE"
