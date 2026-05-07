@@ -6,13 +6,7 @@
 #
 
 FILE="/etc/mmdvmhost"
-
-if [[ $EUID -ne 0 ]]; then
-    echo "Please run with sudo"
-    exit 1
-fi
-
-sudo rpi-rw
+rpi-rw
 
 if ! grep -q '^Options=UNIT=true$' "$FILE"; then
     sudo sed -i '159i Options=UNIT=true' "$FILE"
@@ -21,4 +15,4 @@ else
     echo "Line already exists."
 fi
 
-sudo rpi-ro
+rpi-ro
