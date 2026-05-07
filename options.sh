@@ -5,7 +5,7 @@
 # Ver 1.0 - 
 #
 
-FILE="/path/to/your/file"
+FILE="/etc/mmdvmhost"
 
 if [[ $EUID -ne 0 ]]; then
     echo "Please run with sudo"
