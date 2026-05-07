@@ -18,8 +18,8 @@ fi
 
 mount -o remount,rw /
 
-if ! grep -q '^Options=UNIT=true$' "$FILE"; then
-    sed -i '159i Options=UNIT=true' "$FILE"
+if ! grep -q '^Options="unit=true"$' "$FILE"; then
+    sed -i '159i Options="unit=true"' "$FILE"
     echo "Line added."
 else
     echo "Line already exists."
