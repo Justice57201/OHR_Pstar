@@ -15,4 +15,4 @@ else
     echo "Line already exists."
 fi
 
-rpi-ro
+mount -o remount,ro /
