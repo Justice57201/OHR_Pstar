@@ -123,8 +123,8 @@ curl --fail -o ${XLXHOSTS} -s http://www.pistar.uk/downloads/XLXHosts.txt --user
 curl --fail -o ${NXDNIDFILE} -s https://www.gmrs-link.com/pistar/NXDN.csv --user-agent "Pi-Star_${pistarCurVersion}"
 curl --fail -o ${NXDNHOSTS} -s http://www.gmrs-link.com/pistar/pi-star/NXDN_Hosts.txt --user-agent "Pi-Star_${pistarCurVersion}"
 curl --fail -o ${TGLISTBM} -s http://www.pistar.uk/downloads/TGList_BM.txt --user-agent "Pi-Star_${pistarCurVersion}"
-curl --fail -o ${TGLISTP25} -s http://www.pistar.uk/downloads/TGList_P25.txt --user-agent "Pi-Star_${pistarCurVersion}"
-curl --fail -o ${TGLISTNXDN} -s http://www.pistar.uk/downloads/TGList_NXDN.txt --user-agent "Pi-Star_${pistarCurVersion}"
+curl --fail -o ${TGLISTP25} -s http://www.gmrs-link.com/pistar/pi-star/TGList_P25.txt --user-agent "Pi-Star_${pistarCurVersion}"
+curl --fail -o ${TGLISTNXDN} -s http://www.gmrs-link.com/pistar/pi-star/TGList_NXDN.txt --user-agent "Pi-Star_${pistarCurVersion}"
 curl --fail -o ${TGLISTYSF} -s http://www.pistar.uk/downloads/TGList_YSF.txt --user-agent "Pi-Star_${pistarCurVersion}"
 # Download Nextion Groups
 if [ -f ${NEXTIONGROUPS} ]; then
