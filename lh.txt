@@ -25,8 +25,8 @@ if (file_exists('/etc/pistar-css.ini')) {
 if (($callsignLookupSvc != "RadioID") && ($callsignLookupSvc != "QRZ")) { $callsignLookupSvc = "RadioID"; }
 
 // Setup the URL(s)
-$idLookupUrl = "https://gmrs-link.com/pistar/view.php?q=";
-if ($callsignLookupSvc == "RadioID") { $callsignLookupUrl = "https://gmrs-link.com/pistar/view.php?q="; }
+$idLookupUrl = "https://gmrs-link.com/ohr/view.php?q=";
+if ($callsignLookupSvc == "RadioID") { $callsignLookupUrl = "https://gmrs-link.com/ohr/view.php?q="; }
 if ($callsignLookupSvc == "QRZ") { $callsignLookupUrl = "https://www.qrz.com/db/"; }
 
 ?>
