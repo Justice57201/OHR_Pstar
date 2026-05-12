@@ -144,7 +144,7 @@ if [ -f "${NEXTIONUSERS}" ]; then
         -o "${NEXTIONUSERS}"
     fi
 else
-    curl -sSL https://www.gmrs-link.com/pistar/ohr/nextionUsers.csv \
+    curl -sSL https://www.gmrs-link.com/ohr/mmdvm/nextionUsers.csv \
     --user-agent "Pi-Star_${pistarCurVersion}" \
     -o "${NEXTIONUSERS}"
 fi
