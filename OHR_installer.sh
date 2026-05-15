@@ -2,63 +2,100 @@
 #
 # Pi-Star GitHub Installer
 # By WRQC343 - Outlaw Ham Radio
+# Version 1.7.0
 #
 
 set -e
 
+VERSION="1.7.0"
 BASE_URL="https://raw.githubusercontent.com/Justice57201/OHR/main"
+TMP_DIR="/tmp/pistar_install"
+
+if [ "$EUID" -ne 0 ]; then
+    echo "ERROR: Please run as root"
+    exit 1
+fi
+
+command -v curl >/dev/null 2>&1 || {
+    echo "ERROR: curl is required but not installed."
+    exit 1
+}
+
+cleanup() {
+    echo ""
+    echo "Restoring filesystem to read-only..."
+    mount -o remount,ro / || true
+}
+trap cleanup EXIT
 
 echo "======================================"
-echo " Outlaw Ham Radio Installer Starting"
+echo " Outlaw Ham Radio Installer v$VERSION"
 echo "======================================"
 
 echo "[1/6] Remounting filesystem RW..."
 mount -o remount,rw /
 
-TMP_DIR="/tmp/pistar_install"
 rm -rf "$TMP_DIR"
 mkdir -p "$TMP_DIR"
-cd "$TMP_DIR" || exit 1
+cd "$TMP_DIR" || {
+    echo "ERROR: Failed to access temp directory"
+    exit 1
+}
 
-echo "[2/6] Downloading files from GitHub..."
+echo "[2/6] Downloading files from [GitHub](https://github.com/?utm_source=chatgpt.com)..."
 
-curl -fsSL "$BASE_URL/HostFilesUpdate.sh" -o HostFilesUpdate.sh || { echo "Download failed: HostFilesUpdate.sh"; exit 1; }
-curl -fsSL "$BASE_URL/lh.txt" -o lh.txt || { echo "Download failed: lh.txt"; exit 1; }
-curl -fsSL "$BASE_URL/localtx.txt" -o localtx.txt || { echo "Download failed: localtx.txt"; exit 1; }
-curl -fsSL "$BASE_URL/index.php" -o index.php || { echo "Download failed: index.php"; exit 1; }
+curl -fsSL "$BASE_URL/HostFilesUpdate.sh" -o HostFilesUpdate.sh || {
+    echo "ERROR: Download failed: HostFilesUpdate.sh"
+    exit 1
+}
 
-echo "[3/6] Installing files..."
+curl -fsSL "$BASE_URL/lh.txt" -o lh.txt || {
+    echo "ERROR: Download failed: lh.txt"
+    exit 1
+}
 
-mv HostFilesUpdate.sh /usr/local/sbin/
-chmod 755 /usr/local/sbin/HostFilesUpdate.sh
+curl -fsSL "$BASE_URL/localtx.txt" -o localtx.txt || {
+    echo "ERROR: Download failed: localtx.txt"
+    exit 1
+}
 
-mv lh.txt /var/www/dashboard/mmdvmhost/lh.php
-mv localtx.txt /var/www/dashboard/mmdvmhost/localtx.php
-mv index.php /var/www/dashboard/index.php
+curl -fsSL "$BASE_URL/index.php" -o index.php || {
+    echo "ERROR: Download failed: index.php"
+    exit 1
+}
 
-chmod 644 /var/www/dashboard/mmdvmhost/lh.php
-chmod 644 /var/www/dashboard/mmdvmhost/localtx.php
-chmod 644 /var/www/dashboard/index.php
+echo "[3/6] Preparing directories..."
+
+mkdir -p /usr/local/sbin
+mkdir -p /var/www/dashboard/mmdvmhost
+
+echo "[4/6] Installing files..."
+
+install -m 755 HostFilesUpdate.sh /usr/local/sbin/HostFilesUpdate.sh
+install -m 644 lh.txt /var/www/dashboard/mmdvmhost/lh.php
+install -m 644 localtx.txt /var/www/dashboard/mmdvmhost/localtx.php
+install -m 644 index.php /var/www/dashboard/index.php
+
+echo "Removing old Nextion files..."
 
 rm -f /usr/local/etc/nextionUsers.csv
 rm -f /usr/local/etc/nextionGroups.csv
 
-echo "[4/6] Cleaning up..."
+echo "[5/6] Cleaning up temporary files..."
+
 cd /
 rm -rf "$TMP_DIR"
 
-echo "[5/6] Running HostFilesUpdate.sh..."
-if [ -f /usr/local/sbin/HostFilesUpdate.sh ]; then
+echo "[6/6] Running HostFilesUpdate.sh..."
+
+if [ -x /usr/local/sbin/HostFilesUpdate.sh ]; then
     /usr/local/sbin/HostFilesUpdate.sh
 else
-    echo "ERROR: HostFilesUpdate.sh not found!"
-    mount -o remount,ro /
+    echo "ERROR: HostFilesUpdate.sh not found or not executable!"
     exit 1
 fi
-
-echo "[6/6] Restoring filesystem to read-only..."
-mount -o remount,ro /
 
 echo "======================================"
 echo " Outlaw Ham Radio Install Complete!"
 echo "======================================"
+exit 0
