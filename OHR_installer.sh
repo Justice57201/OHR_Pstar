@@ -32,7 +32,7 @@ echo "======================================"
 echo " Outlaw Ham Radio Installer v$VERSION"
 echo "======================================"
 
-echo "[1/6] Remounting filesystem RW..."
+echo "[1/6] Remounting file system RW..."
 mount -o remount,rw /
 
 rm -rf "$TMP_DIR"
@@ -42,7 +42,7 @@ cd "$TMP_DIR" || {
     exit 1
 }
 
-echo "[2/6] Downloading files from [GitHub](https://github.com/?utm_source=chatgpt.com)..."
+echo "[2/6] Downloading files from Github"
 
 curl -fsSL "$BASE_URL/HostFilesUpdate.sh" -o HostFilesUpdate.sh || {
     echo "ERROR: Download failed: HostFilesUpdate.sh"
