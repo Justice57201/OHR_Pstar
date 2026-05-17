@@ -8,7 +8,7 @@
 set -e
 
 VERSION="1.7.0"
-BASE_URL="https://raw.githubusercontent.com/Justice57201/OHR/main"
+BASE_URL="https://raw.githubusercontent.com/Justice57201/OHR_Pstar/main"
 TMP_DIR="/tmp/pistar_install"
 
 if [ "$EUID" -ne 0 ]; then
