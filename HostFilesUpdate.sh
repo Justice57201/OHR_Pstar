@@ -3,12 +3,12 @@
 #                                                       #
 #              HostFilesUpdate.sh Updater               #
 #                                                       #
-#      Written for Pi-Star (http://www.pistar.uk/)      #
-#               By Andy Taylor (MW0MWZ)                 #
+#      Written for Pi-Star                              #
+#                By Justice                             #
 #                                                       #
-#                     Version 2.7                       #
+#                Version 2.7                            #
 #                                                       #
-#   Based on the update script by Tony Corbett G0WFV    #
+#                                                       #
 #                                                       #
 #########################################################
 
@@ -115,6 +115,8 @@ else
   curl --fail -o ${DExtraHOSTS} -s http://www.pistar.uk/downloads/DExtra_Hosts.txt --user-agent "Pi-Star_${pistarCurVersion}"
 fi
 curl -sSL https://www.gmrs-link.com/ohr/mmdvm/DMRIds.dat.gz --user-agent "Pi-Star_${pistarCurVersion}" | gunzip -c > ${DMRIDFILE}
+curl -sSL https://www.gmrs-link.com/ohr/mmdvm/nextionUsers.csv --user-agent "Pi-Star_${pistarCurVersion}" -o "${NEXTIONUSERS}"
+
 curl --fail -o ${P25HOSTS} -s https://www.gmrs-link.com/ohr/mmdvm/P25_Hosts.txt --user-agent "Pi-Star_${pistarCurVersion}"
 curl --fail -o ${M17HOSTS} -s http://www.pistar.uk/downloads/M17_Hosts.txt --user-agent "Pi-Star_${pistarCurVersion}"
 curl --fail -o ${YSFHOSTS} -s http://www.pistar.uk/downloads/YSF_Hosts.txt --user-agent "Pi-Star_${pistarCurVersion}"
@@ -126,29 +128,7 @@ curl --fail -o ${TGLISTBM} -s http://www.pistar.uk/downloads/TGList_BM.txt --use
 curl --fail -o ${TGLISTP25} -s https://www.gmrs-link.com/ohr/mmdvm/TGList_P25.txt --user-agent "Pi-Star_${pistarCurVersion}"
 curl --fail -o ${TGLISTNXDN} -s https://www.gmrs-link.com/ohr/mmdvm/TGList_NXDN.txt --user-agent "Pi-Star_${pistarCurVersion}"
 curl --fail -o ${TGLISTYSF} -s http://www.pistar.uk/downloads/TGList_YSF.txt --user-agent "Pi-Star_${pistarCurVersion}"
-# Download Nextion Groups
-if [ -f ${NEXTIONGROUPS} ]; then
-	# Update ${NEXTIONGROUPS}
- 	if [[ $(find "${NEXTIONGROUPS}" -mtime +7) ]]; then
-  		curl --fail -o ${NEXTIONGROUPS} -s https://www.gmrs-link.com/ohr/mmdvm/groups.txt --user-agent "Pi-Star_${pistarCurVersion}"
-  	fi
-else
-	# Get ${NEXTIONGROUPS}
- 	curl --fail -o ${NEXTIONGROUPS} -s https://www.gmrs-link.com/ohr/mmdvm/groups.txt --user-agent "Pi-Star_${pistarCurVersion}"
-fi
-# Download Nextion Users
-if [ -f "${NEXTIONUSERS}" ]; then
-    # Check if file is older than 7 days
-    if [ "$(find "${NEXTIONUSERS}" -mtime +7 -print)" ]; then
-        curl -sSL "https://www.gmrs-link.com/ohr/mmdvm/nextionUsers.csv" \
-            --user-agent "Pi-Star_${pistarCurVersion}" \
-            -o "${NEXTIONUSERS}"
-    fi
-else
-    curl -sSL "https://www.gmrs-link.com/ohr/mmdvm/nextionUsers.csv" \
-        --user-agent "Pi-Star_${pistarCurVersion}" \
-        -o "${NEXTIONUSERS}"
-fi
+curl --fail -o ${NEXTIONGROUPS} -s https://www.gmrs-link.com/ohr/mmdvm/groups.txt --user-agent "Pi-Star_${pistarCurVersion}"
 
 # If there is a DMR Over-ride file, add it's contents to DMR_Hosts.txt
 if [ -f "/root/DMR_Hosts.txt" ]; then
