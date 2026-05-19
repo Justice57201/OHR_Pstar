@@ -28,11 +28,11 @@ cleanup() {
 }
 trap cleanup EXIT
 
-echo "======================================"
-echo " Outlaw Ham Radio Installer v$VERSION"
-echo "======================================"
+echo "===========================++++=============="
+echo " Outlaw Ham Radio Pi-Star Installer v$VERSION"
+echo "===============================++++=========="
 
-echo "[1/6] Remounting file system RW..."
+echo "[1/5] Remounting file system RW..."
 mount -o remount,rw /
 
 rm -rf "$TMP_DIR"
@@ -42,7 +42,17 @@ cd "$TMP_DIR" || {
     exit 1
 }
 
-echo "[2/6] Downloading files from Github"
+sudo rm -f /usr/local/etc/DCS_Hosts.txt \
+           /usr/local/etc/DExtra_Hosts.txt \
+           /usr/local/etc/DPlus_Hosts.txt \
+           /usr/local/etc/M17Hosts.txt \
+           /usr/local/etc/YSFHosts.txt \
+           /usr/local/etc/FCSHosts.txt \
+           /usr/local/etc/XLXHosts.txt \
+           /usr/local/etc/TGList_BM.txt \
+           /usr/local/etc/TGList_YSF.txt
+
+echo "[2/5] Downloading files from Github"
 
 curl -fsSL "$BASE_URL/HostFilesUpdate.sh" -o HostFilesUpdate.sh || {
     echo "ERROR: Download failed: HostFilesUpdate.sh"
@@ -64,12 +74,7 @@ curl -fsSL "$BASE_URL/index.php" -o index.php || {
     exit 1
 }
 
-echo "[3/6] Preparing directories..."
-
-mkdir -p /usr/local/sbin
-mkdir -p /var/www/dashboard/mmdvmhost
-
-echo "[4/6] Installing files..."
+echo "[3/5] Installing files..."
 
 install -m 755 HostFilesUpdate.sh /usr/local/sbin/HostFilesUpdate.sh
 install -m 644 lh.txt /var/www/dashboard/mmdvmhost/lh.php
@@ -81,12 +86,12 @@ echo "Removing old Nextion files..."
 rm -f /usr/local/etc/nextionUsers.csv
 rm -f /usr/local/etc/nextionGroups.csv
 
-echo "[5/6] Cleaning up temporary files..."
+echo "[4/5] Cleaning up temporary files..."
 
 cd /
 rm -rf "$TMP_DIR"
 
-echo "[6/6] Running HostFilesUpdate.sh..."
+echo "[5/5] Running HostFilesUpdate.sh..."
 
 if [ -x /usr/local/sbin/HostFilesUpdate.sh ]; then
     /usr/local/sbin/HostFilesUpdate.sh
