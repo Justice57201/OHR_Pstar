@@ -42,15 +42,15 @@ cd "$TMP_DIR" || {
     exit 1
 }
 
-sudo rm -f /usr/local/etc/DCS_Hosts.txt \
-           /usr/local/etc/DExtra_Hosts.txt \
-           /usr/local/etc/DPlus_Hosts.txt \
-           /usr/local/etc/M17Hosts.txt \
-           /usr/local/etc/YSFHosts.txt \
-           /usr/local/etc/FCSHosts.txt \
-           /usr/local/etc/XLXHosts.txt \
-           /usr/local/etc/TGList_BM.txt \
-           /usr/local/etc/TGList_YSF.txt
+rm -f /usr/local/etc/DCS_Hosts.txt \
+      /usr/local/etc/DExtra_Hosts.txt \
+      /usr/local/etc/DPlus_Hosts.txt \
+      /usr/local/etc/M17Hosts.txt \
+      /usr/local/etc/YSFHosts.txt \
+      /usr/local/etc/FCSHosts.txt \
+      /usr/local/etc/XLXHosts.txt \
+      /usr/local/etc/TGList_BM.txt \
+      /usr/local/etc/TGList_YSF.txt
 
 echo "[2/5] Downloading files from Github"
 
@@ -59,13 +59,13 @@ curl -fsSL "$BASE_URL/HostFilesUpdate.sh" -o HostFilesUpdate.sh || {
     exit 1
 }
 
-curl -fsSL "$BASE_URL/lh.txt" -o lh.txt || {
-    echo "ERROR: Download failed: lh.txt"
+curl -fsSL "$BASE_URL/lh.php" -o lh.php || {
+    echo "ERROR: Download failed: lh.php"
     exit 1
 }
 
-curl -fsSL "$BASE_URL/localtx.txt" -o localtx.txt || {
-    echo "ERROR: Download failed: localtx.txt"
+curl -fsSL "$BASE_URL/localtx.php" -o localtx.php || {
+    echo "ERROR: Download failed: localtx.php"
     exit 1
 }
 
@@ -77,8 +77,8 @@ curl -fsSL "$BASE_URL/index.php" -o index.php || {
 echo "[3/5] Installing files..."
 
 install -m 755 HostFilesUpdate.sh /usr/local/sbin/HostFilesUpdate.sh
-install -m 644 lh.txt /var/www/dashboard/mmdvmhost/lh.php
-install -m 644 localtx.txt /var/www/dashboard/mmdvmhost/localtx.php
+install -m 644 lh.php /var/www/dashboard/mmdvmhost/lh.php
+install -m 644 localtx.php /var/www/dashboard/mmdvmhost/localtx.php
 install -m 644 index.php /var/www/dashboard/index.php
 
 echo "Removing old Nextion files..."
