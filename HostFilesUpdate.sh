@@ -6,7 +6,7 @@
 #      Written for Pi-Star                              #
 #                By Justice                             #
 #                                                       #
-#                Version 2.7                            #
+#                Version 1.7.0                          #
 #                                                       #
 #                                                       #
 #                                                       #
