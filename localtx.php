@@ -27,8 +27,8 @@ if (($callsignLookupSvc != "RadioID") && ($callsignLookupSvc != "QRZ")) { $calls
 
 // Setup the URL(s)
 //$idLookupUrl = "https://database.radioid.net/database/view?id=";
-$idLookupUrl = "https://gmrs-link.com/pistar/view.php?q=";
-if ($callsignLookupSvc == "RadioID") { $callsignLookupUrl = "https://gmrs-link.com/ohr/view.php?q="; }
+$idLookupUrl = "https://ohr.gmrs-link.com/view.php?q=";
+if ($callsignLookupSvc == "RadioID") { $callsignLookupUrl = "https://ohr.gmrs-link.com/view.php?q="; }
 if ($callsignLookupSvc == "QRZ") { $callsignLookupUrl = "https://www.qrz.com/db/"; }
 
 ?>
